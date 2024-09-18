@@ -1,4 +1,5 @@
-import { Amplify, Auth } from 'aws-amplify';
+import { Amplify } from 'aws-amplify';
+import { currentSession } from 'aws-amplify/auth';
 import { generateClient } from "aws-amplify/api";
 import { withAuthenticator,
   Accordion, 
@@ -214,9 +215,9 @@ async function getData(actionPath, action) {
 
 async function getToken(type){
   if("ID" == type)
-    return await (Auth.currentSession()).then(data => {return data.getIdToken().getJwtToken()})
+    return await (currentSession()).then(data => {return data.getIdToken().getJwtToken()})
   else if("ACCESS" == type)
-    return await (Auth.currentSession()).then(data => {return data.getAccessToken().getJwtToken()})
+    return await (currentSession()).then(data => {return data.getAccessToken().getJwtToken()})
 }
 
 export default withAuthenticator(App, 

@@ -1,5 +1,5 @@
-import { Amplify, API, Auth } from 'aws-amplify';
-
+import { Amplify, Auth } from 'aws-amplify';
+import { generateClient } from "aws-amplify/api";
 import { withAuthenticator,
   Accordion, 
   Button,  
@@ -15,7 +15,7 @@ import { useState } from 'react';
 
 import awsExports from './aws-exports';
 Amplify.configure(awsExports);
-
+const client = generateClient();
 let isAlertVisible, setIsAlertVisible, alertHeading, alertMessage , alertVariation, isCustomerUser;
 let petId, orderNumber, authResult ='', storeId;
 
@@ -166,7 +166,7 @@ async function getData(actionPath, action) {
   };
 
   if(action == 'GET'){
-    API.get(apiName, path, myInit).then(result => {  
+    client.get(apiName, path, myInit).then(result => {  
       
       alertHeading = "Success!";
       alertVariation = "success";
@@ -189,7 +189,7 @@ async function getData(actionPath, action) {
   }
 
   else if(action == 'POST'){
-    API.post(apiName, path, myInit).then(result => {  
+    client.post(apiName, path, myInit).then(result => {  
       
       alertHeading = "Success!";
       alertVariation = "success";
